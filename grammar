@@ -1,0 +1,16 @@
+word ->
+    | character
+    | character word
+
+character ->
+    | B_character
+    | I_character
+    | T_character
+    | E_character
+
+B_character -> B | b
+I_character -> I | i
+T_character -> T | t
+E_character -> E | e
+
+
