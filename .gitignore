@@ -1,2 +1,6 @@
 #Bite files
 *.bt
+
+#Vime Files
+.*.swp
+.*.swo

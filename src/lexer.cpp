@@ -30,7 +30,7 @@ void Lexer::addNextGroup()
 void Lexer::addEndOfStream()
 {
     addCurrentCharacter();
-    groups.emplace_back(current_lexeme, END_OF_STREAM);
+    addGroup(current_lexeme, END_OF_STREAM);
 }
 
 void Lexer::addWord()
@@ -40,11 +40,12 @@ void Lexer::addWord()
         addCurrentCharacter();
         getNextCharacter();
     }
+    addGroup(current_lexeme, WORD);
 }
 
 void Lexer::addGroup(const std::string& lexeme, Token token)
 {
-    groups.emplace_back(current_lexeme, WORD);
+    groups.emplace_back(lexeme, token);
 }
 
 void Lexer::getNextNonSpaceCharacter()
