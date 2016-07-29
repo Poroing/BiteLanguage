@@ -1,12 +1,31 @@
+program -> <arith_expr>
+
 word ->
-    | character
-    | character word
+    | <character>
+    | <character><word>
 
 character ->
-    | B_character
-    | I_character
-    | T_character
-    | E_character
+    | <B_character>
+    | <I_character>
+    | <T_character>
+    | <E_character>
+
+arith_expr ->
+    | <number>
+    | <arith_expr> <operator> <arith_expr>
+    | <left_paren> <arith_expr> <right_paren>
+
+operator ->
+    | <add_op>
+    | <sub_op>
+
+number_start -> BIte
+number -> <number_start><word>
+add_op -> BITe
+sub_op -> BITE
+
+left_paren -> Bite
+right_paren -> bite
 
 B_character -> B | b
 I_character -> I | i
