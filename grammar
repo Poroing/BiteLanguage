@@ -11,8 +11,8 @@ character ->
     | <E_character>
 
 arith_expr ->
-    | <number>
     | <arith_expr> <operator> <arith_expr>
+    | <number>
     | <left_paren> <arith_expr> <right_paren>
 
 operator ->

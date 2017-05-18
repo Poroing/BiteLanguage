@@ -1,18 +1,23 @@
 #ifndef _H_BITEITERATOR_H_
 #define _H_BITEITERATOR_H_
 
+#include <iterator>
+#include <functional>
+
+//apply a function on the values of an iterator to produce a new iterator
 template<typename InternalIteratorType, typename OutType>
-class MapIterator
+class MapIterator 
 {
-    typedef iterator_traits<InternalIteratorType>::difference_type
+    typedef typename std::iterator_traits<InternalIteratorType>::difference_type
         difference_type;
     typedef OutType value_type;
     typedef OutType* pointer;
     typedef OutType& reference;
-    typedef iterator_traits<InternalIteratorType>::iterator_category
+    typedef typename std::iterator_traits<InternalIteratorType>::iterator_category
         iterator_category;
 
-    typedef InType iterator_traits<InternalIteratorType>::value_type
+    typedef typename std::iterator_traits<InternalIteratorType>::value_type
+        InType;
 
 public:
     MapIterator(const MapIterator<InternalIteratorType, OutType>& other):
@@ -37,7 +42,7 @@ public:
         initializeCurrentOut();
     };
 
-    MapIterator(InternalIteratorTypeType& internal_iterator,
+    MapIterator(InternalIteratorType& internal_iterator,
             std::function<OutType(InType)>&& function):
         internal_iterator(internal_iterator),
         function(std::move(function))
@@ -68,7 +73,7 @@ public:
 
     pointer operator->() const
     {
-        return &current_out
+        return &current_out;
     }
 
     reference operator*() const
@@ -97,7 +102,7 @@ public:
     ~MapIterator<InternalIteratorType, OutType>()
     {};
 
-private
+private:
 
     void updateCurrentout() const
     {
@@ -125,5 +130,5 @@ private
     std::function<OutType(InType)> function;
     mutable bool is_current_out_valid;
     mutable OutType current_out;
-}
+};
 #endif

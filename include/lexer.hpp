@@ -8,6 +8,7 @@
 #include <string>
 #include <istream>
 #include <unordered_map>
+#include <iterator>
 
 struct Group {
     Group(const std::string& lexeme, Token token);
@@ -15,6 +16,14 @@ struct Group {
     std::string lexeme;
     Token token;
 };
+
+template<typename Iterator>
+constexpr bool isGroupIterator(const Iterator&)
+{
+    return std::is_same<
+        typename std::iterator_traits<Iterator>::value_type,
+        Group>::value;
+}
 
 
 class Lexer

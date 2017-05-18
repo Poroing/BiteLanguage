@@ -4,6 +4,7 @@
 #include <unordered_map>
 
 enum Token {
+    OPERATOR,
     WORD,
     RIGHT_PAREN,
     LEFT_PAREN,
