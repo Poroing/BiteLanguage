@@ -51,7 +51,7 @@ as much as the use of exception as condition is ugly. I think
 I should change the object return by the parsing functions,
 maybe a structure in the style:
 ```cpp
-style ParsingResult
+struct ParsingResult
 {
 	PasingInfo parse_info;
 	ParseTree parse_tree;
