@@ -9,15 +9,15 @@
 #include <iostream>
 #include <string>
 
-const std::vector<char> Lexer::valid_characters = { 'b', 'i', 't', 'e' };
+const std::vector<char> Lexer::valid_characters = { 'b', 'r', 'a', 'x' };
 
 //TODO: implement a unordered_map wrapper that fits my need and is readable
 const StringTable<Token> Lexer::lexemToken = {
-    { "BIte", NUMBER_START },
-    { "BITe", ADD_OP },
-    { "BITE", SUB_OP },
-    { "bite", RIGHT_PAREN },
-    { "Bite", LEFT_PAREN }
+    { "BRax", NUMBER_START },
+    { "BRAx", ADD_OP },
+    { "BRAW", SUB_OP },
+    { "brax", RIGHT_PAREN },
+    { "Brax", LEFT_PAREN }
 };
 
 Lexer::Lexer(std::istream& program_stream):
@@ -139,7 +139,7 @@ bool Lexer::isCurrentLexemeTokenNumber() const
 
 std::string Lexer::getLexemeRelevantPart(const std::string& lexeme) const
 {
-    return std::string(lexeme, 0, Lexer::BITE_WORD_LENGTH);
+    return std::string(lexeme, 0, Lexer::WORD_LENGTH);
 }
 
 void Lexer::checkCurrentCharacterValidity() const

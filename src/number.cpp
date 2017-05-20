@@ -1,17 +1,17 @@
 #include "number.hpp"
 
-int biteCharacterToInteger(char c)
+int braxCharacterToInteger(char c)
 {
-    return bite_character_value.at(c);
+    return brax_character_value.at(c);
 }
 
-int biteNumberToInteger(const std::string& bite_number)
+int braxNumberToInteger(const std::string& brax_number)
 {
     int number = 0;
     int current_character_index = 0;
-    auto current_character = bite_number.end() - 1;
-    while (current_character >= bite_number.begin()) {
-        number += BITE_BASE * current_character_index;
+    auto current_character = brax_number.end() - 1;
+    while (current_character >= brax_number.begin()) {
+        number += BRAX_BASE * current_character_index;
         ++current_character_index;
         --current_character;
     }

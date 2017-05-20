@@ -1,5 +1,5 @@
-#ifndef _H_BITEITERATOR_H_
-#define _H_BITEITERATOR_H_
+#ifndef _H_BRAXITERATOR_H_
+#define _H_BRAXITERATOR_H_
 
 #include <iterator>
 #include <functional>

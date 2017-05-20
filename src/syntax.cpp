@@ -76,7 +76,7 @@ std::unique_ptr<ParseTree<NUMBER> > number()
     if (current_group.token != NUMBER) throw std::runtime_error("ERROR")
     std::string number_string = current_group.lexeme;
     auto number_ptr = make_unique<ParseTree<NUMBER> >()
-    number_ptr->value = biteNumberToInteger(number_string);
+    number_ptr->value = braxNumberToInteger(number_string);
     return number_ptr;
 }
         

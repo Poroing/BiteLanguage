@@ -1,5 +1,5 @@
-#ifndef _H_BITESTRINGTABLE_H_
-#define _H_BITESTRINGTABLE_H_
+#ifndef _H_BRAXSTRINGTABLE_H_
+#define _H_BRAXSTRINGTABLE_H_
 
 #include <unordered_map>
 #include <string>

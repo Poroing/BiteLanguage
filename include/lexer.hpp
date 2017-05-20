@@ -1,5 +1,5 @@
-#ifndef _H_BITE_LEXER_H_
-#define _H_BITE_LEXER_H_
+#ifndef _H_BRAX_LEXER_H_
+#define _H_BRAX_LEXER_H_
 
 #include "tokens.hpp"
 #include "stringtable.hpp"
@@ -17,19 +17,11 @@ struct Group {
     Token token;
 };
 
-template<typename Iterator>
-constexpr bool isGroupIterator(const Iterator&)
-{
-    return std::is_same<
-        typename std::iterator_traits<Iterator>::value_type,
-        Group>::value;
-}
-
 
 class Lexer
 {
     constexpr static auto EOF_CHARACTER = std::istream::traits_type::eof();
-    constexpr static int BITE_WORD_LENGTH = 4;
+    constexpr static int WORD_LENGTH = 4;
 
     const static std::vector<char> valid_characters;
     const static StringTable<Token> lexemToken;
