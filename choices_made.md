@@ -91,7 +91,16 @@ since I need to store different types with the help
 of polymorphism in the `std::vector` that
 store the children of non terminal nodes: an arithmetic expression
 might have (number) or (arithmetic expression, operator,
-arithmetic expression) as children. It might be possible to
+arithmetic expression) as children. This base class must have
+a runtime token member to cast correctly the pointer from a
+pointer to an object of type `ParseTreeBase` to an object
+with the wanted parse tree type. We can't store a compile
+time static member in each one of the instantiation of
+the template since the static member won't be accessible
+if the object is manipulated with a pointer to a base
+class object.
+
+It might be possible to
 do something safer with the help of type computation: to have
 a metafunction that return the possibles children types if given
 a Token.
