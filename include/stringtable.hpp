@@ -11,6 +11,8 @@
 #include <algorithm>
 
 
+//Create an hash table wich associate std::string to a given type
+//and that can be created with cstring initializer list
 template<typename Value>
 class StringTable
 {
@@ -58,8 +60,8 @@ private:
     {
         std::vector<std::pair<std::string, Value> > converted_range;
         converted_range = convertCstringPairRangeToStringPairRange(begin, end);
-        return std::move(std::unordered_map<std::string, Value>(
-            converted_range.begin(), converted_range.end()));
+        return std::unordered_map<std::string, Value>(
+            converted_range.begin(), converted_range.end());
     };
 
     template<typename InputIterator>

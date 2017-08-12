@@ -3,6 +3,7 @@
 
 #include <iterator>
 #include <functional>
+#include <utility>
 
 //apply a function on the values of an iterator to produce a new iterator
 template<typename InternalIteratorType, typename OutType>
