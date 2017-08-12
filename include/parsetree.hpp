@@ -47,33 +47,41 @@ protected:
     {};
 };
 
+
+template<Token, typename = void>
+class ParseTree {};
+
 template<
-    Token parse_tree_token,
-    typename = std::enable_if_t<isTerminal(parse_tree_token)>>
-class ParseTreeTerminal : public ParseTreeBase
+    Token _token>
+class ParseTree<_token, std::enable_if_t<isTerminal(_token)>>
+    : public ParseTreeBase
 {
 
 public:
-    ParseTreeTerminal():
+
+    static constexpr Token token = _token;
+
+    ParseTree():
         ParseTreeBase(token)
     {};
 
-    ParseTreeTerminal(ParseTreeTerminal<parse_tree_token>&& other):
+    ParseTree(ParseTree<token>&& other):
         ParseTreeBase(token)
     {};
 };
 
-template<
-    Token parse_tree_token,
-    typename = std::enable_if<!isTerminal(parse_tree_token)>>
-class ParseTreeNonTerminal : public ParseTreeBase
+template<Token _token>
+class ParseTree<_token, std::enable_if_t<!isTerminal(_token)>>
+    : public ParseTreeBase
 {
 public:
-    ParseTreeNonTerminal():
-        ParseTreeBase(parse_tree_token)
+    static constexpr Token token = token;
+
+    ParseTree():
+        ParseTreeBase(token)
     {}
 
-    ParseTreeNonTerminal(ParseTreeNonTerminal<parse_tree_token>&& other):
+    ParseTree(ParseTree<token>&& other):
         ParseTreeBase(token),
         childs(std::move(other.childs))
     {}
@@ -128,11 +136,21 @@ auto makeParseTreeAndEnd(
 template<
     typename GroupIterator,
     typename = std::enable_if_t<isGroupIterator_v<GroupIterator>>>
-ParseTreeNonTerminal<ARITH_EXPR>
+ParseTree<ARITH_EXPR>
 buildParseTree(GroupIterator& groups_begin, GroupIterator& groups_end)
 {
     if (groups_begin >= groups_end)
         throw std::runtime_error("There is no groups to parse");
+
+    ParseTreeAndEnd<GroupIterator> parse_tree_and_end = parseArithmeticExpression(
+        groups_begin,
+        groups_end);
+
+    ParseTree<ARITH_EXPR> parse_tree = 
+        std::move(*static_cast<ParseTree<ARITH_EXPR>*>(
+            parse_tree_and_end.parsed_tree_ptr));
+    
+    return parse_tree;
 }
     
 
@@ -142,7 +160,7 @@ template<
 ParseTreeAndEnd<GroupIterator>
 parseArithmeticExpression(GroupIterator& groups_begin, GroupIterator& groups_end)
 {
-    std::unique_ptr<ParseTreeNonTerminal<ARITH_EXPR> > parse_tree_ptr;
+    std::unique_ptr<ParseTree<ARITH_EXPR> > parse_tree_ptr;
     ParseTreeAndEnd<GroupIterator> sub_parse_tree;
 
     GroupIterator current_position = groups_begin;
@@ -156,7 +174,7 @@ parseArithmeticExpression(GroupIterator& groups_begin, GroupIterator& groups_end
     }
     else if (current_position->token == NUMBER)
     {
-        parse_tree_ptr->addChild(ParseTreeTerminal<NUMBER>());
+        parse_tree_ptr->addChild(ParseTree<NUMBER>());
         ++current_position;
     }
 
@@ -222,14 +240,14 @@ parseOperator(GroupIterator& groups_begin, GroupIterator& groups_end)
 {
     assertTypeIsGroupIterator(groups_begin);
 
-    auto parsed_tree_ptr = std::unique_ptr<ParseTreeNonTerminal<OPERATOR>>(
-        new ParseTreeNonTerminal<OPERATOR>);
+    auto parsed_tree_ptr = std::unique_ptr<ParseTree<OPERATOR>>(
+        new ParseTree<OPERATOR>);
     switch(groups_begin->token) {
     case ADD_OP:
-        parsed_tree_ptr->addChild(ParseTreeTerminal<ADD_OP>());
+        parsed_tree_ptr->addChild(ParseTree<ADD_OP>());
         break;
     case SUB_OP:
-        parsed_tree_ptr->addChild(ParseTreeTerminal<SUB_OP>());
+        parsed_tree_ptr->addChild(ParseTree<SUB_OP>());
         break;
     default:
         throw std::invalid_argument("Operator must be a valid operator");
