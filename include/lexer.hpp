@@ -3,20 +3,13 @@
 
 #include "tokens.hpp"
 #include "stringtable.hpp"
+#include "group.hpp"
 
 #include <vector>
 #include <string>
 #include <istream>
 #include <unordered_map>
 #include <iterator>
-
-struct Group {
-    Group(const std::string& lexeme, Token token);
-
-    std::string lexeme;
-    Token token;
-};
-
 
 class Lexer
 {
